@@ -1,0 +1,132 @@
+﻿@model FabricTenantManager.Models.EmbeddedViewModel
+
+@{
+  Layout = "_Layout_EmbeddedReport";
+  var reports = Model.reports;
+}
+
+<div class="row">
+  <div id="embed-toolbar" class="d-inline">
+
+    <span id="TargetReportLabel">Select Report:</span>
+
+    <select id="TargetReport" class="form-control form-select" name="TargetReport">
+      @foreach (var report in reports) {
+        <option value="@report.id">@report.name</option>
+      }
+    </select>
+
+    <button type="button" id="fullScreen" class="btn btn-primary float-end">Full Screen</button>
+    <button type="button" id="toggleEdit" class="btn btn-primary float-end">Edit Report</button>
+
+  </div>
+</div>
+
+<div class="row">
+  <div id="report-embed-container"></div>
+</div>
+
+@section Scripts {
+
+  <script type="text/javascript">
+      
+    const urlParams = new URLSearchParams(window.location.search);
+    const WorkspaceId = urlParams.get('WorkspaceId');
+    const queryStingReportId = urlParams.get('ReportId');
+
+    let embedReport = (reportId) => {
+
+      let embedUrl = "https://app.powerbi.com/reportEmbed?reportId=" + reportId;
+      let models = window["powerbi-client"].models;
+      let reportContainer = $("#report-embed-container").get(0);
+
+      reportLoadConfig = {
+        type: "report",
+        id: reportId,
+        embedUrl: embedUrl,
+        accessToken: "@Model.embedToken",
+        tokenType: models.TokenType.Embed,
+        permissions: models.Permissions.All,
+        settings: {
+          panes: {
+            filters: { visible: false, expanded: false },
+            pageNavigation: { visible: true, position: models.PageNavigationPosition.Left }
+          },
+          background: models.BackgroundType.Transparent
+        }
+      };
+
+      let report = powerbi.embed(reportContainer, reportLoadConfig);    
+
+      report.off("error");
+      report.on("error", function(event) {
+          var errorMsg = event.detail;
+          console.error(errorMsg);
+          return;
+      });
+
+      report.on("saved", (event) => {
+        if (event.detail.saveAs) {
+          var newReportId = event.detail.reportObjectId;
+          window.location.href = window.location.href.split('?')[0] +"?WorkspaceId=" + WorkspaceId +"&ReportId=" + newReportId;
+        }             
+      });
+      
+      $("#toggleEdit").text("Edit Report");
+      
+      $("#toggleEdit").click(function () {        
+        let buttonText = $("#toggleEdit").text();
+        if(buttonText == "Edit Report"){
+          $("#toggleEdit").text("Reading Mode");
+          report.switchMode("edit");
+        }
+        else {
+          $("#toggleEdit").text("Edit Report");
+          report.switchMode("view");
+        }      
+      });
+      
+      $("#fullScreen").click(function () {
+        report.fullscreen();
+      });
+
+    };
+
+    let resizeEmbedContainer = () => {
+      var widthBuffer = 12;
+      var heightBuffer = 18;
+      var toolbarHeight = $("#embed-toolbar").height();
+      $("#report-embed-container").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#report-embed-container").width($(window).width() - widthBuffer);
+    };
+
+    $(function() {
+
+      document.title = "@Model.tenantName Reports";
+
+      resizeEmbedContainer();
+
+      $(window).resize(function () {
+        resizeEmbedContainer();
+      });
+
+      if(queryStingReportId != null){
+        $("#TargetReport").val(queryStingReportId);
+         let url = new URL(window.location.href);         
+         history.pushState({}, null, url.pathname + "?WorkspaceId=" + WorkspaceId);
+      }
+
+      var selectedReportId = $("#TargetReport option:selected").val();
+
+      embedReport(selectedReportId);
+
+      $("#TargetReport").on("change", function(){
+        var selectedReportId = $("#TargetReport option:selected").val();
+        console.log("selectedReportId", selectedReportId)
+        embedReport(selectedReportId);
+      });
+
+    });
+
+  </script>
+  }

@@ -1,0 +1,42 @@
+﻿@{
+  Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fabric Deployment Manager</title>
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body style="background-color:#191F26">
+
+  <div class="launch-page">
+    <div class="loading-image">
+      <img src="~/images/loading.gif" />
+    </div>
+  </div>
+
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+  <script type="text/javascript">
+
+    $(() => {
+
+      var urlMonitor = window.location.origin + "/Home/AsyncOperationsMonitor";
+      var urlHome = window.location.origin + "/Home/Index";
+
+      console.log("urlMonitor", urlMonitor);
+      console.log("urlHome", urlHome);
+
+      let wr = window.open(urlHome , 'deployman');
+
+      window.location.href = urlMonitor;
+
+    });
+
+  </script>
+ 
+  </body>
+</html>

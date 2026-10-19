@@ -1,0 +1,9 @@
+find_replace:
+
+    # [AZURE_STORAGE_ROOT]
+    - find_value: "https://fabricdevcampdemos.dfs.core.windows.net/sampledata/productsales/dev/"
+      replace_value:
+        test: "https://fabricdevcampdemos.dfs.core.windows.net/sampledata/productsales/test/"
+        prod: "https://fabricdevcampdemos.dfs.core.windows.net/sampledata/productsales/prod/"
+      item_type: "SemanticModel"
+      item_name: ["Product Sales Imported Model"]

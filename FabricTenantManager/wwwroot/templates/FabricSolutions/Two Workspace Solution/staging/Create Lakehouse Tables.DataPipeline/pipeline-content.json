@@ -1,0 +1,176 @@
+{
+  "properties": {
+    "activities": [
+            {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "DelimitedTextSource",
+            "formatSettings": {
+              "type": "DelimitedTextReadSettings"
+            },
+            "storeSettings": {
+              "type": "AzureBlobFSReadSettings",
+              "recursive": true,
+              "wildcardFolderPath": {
+                "value": "@pipeline().libraryVariables.adls_container_path",
+                "type": "Expression"
+              },
+              "wildcardFileName": "*.csv",
+              "enablePartitionDiscovery": false
+            },
+            "datasetSettings": {
+              "type": "DelimitedText",
+              "typeProperties": {
+                "location": {
+                  "type": "AzureBlobFSLocation",
+                  "fileSystem": {
+                    "value": "@pipeline().libraryVariables.adls_container_name",
+                    "type": "Expression"
+                  }
+                },
+                "columnDelimiter": ",",
+                "quoteChar": "\"",
+                "escapeChar": "\\",
+                "firstRowAsHeader": true
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "@pipeline().libraryVariables.adls_connection.connectionId"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DelimitedTextSink",
+            "formatSettings": {
+              "type": "DelimitedTextWriteSettings",
+              "quoteAllText": true,
+              "fileExtension": ".txt"
+            },
+            "storeSettings": {
+              "type": "LakehouseWriteSettings"
+            },
+            "datasetSettings": {
+              "type": "DelimitedText",
+              "typeProperties": {
+                "location": {
+                  "type": "LakehouseLocation",
+                  "folderPath": "sales-data",
+                  "fileName": {
+                    "value": "@pipeline()?.TriggerEvent?.FileName",
+                    "type": "Expression"
+                  }
+                },
+                "columnDelimiter": ",",
+                "quoteChar": "\"",
+                "escapeChar": "\\",
+                "firstRowAsHeader": true
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "0e4f74d6_6ed5_4cb2_a8fc_526d22b6f679",
+                "properties": {
+                  "type": "Lakehouse",
+                  "typeProperties": {
+                    "artifactId": "4e10517e-dfe9-88f0-4fe4-a4f3034fea15",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000",
+                    "rootFolder": "Files"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Copy data files to bronze lakehouse",
+        "dependsOn": []
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "53f194d3-b22e-b2e9-4878-65da8a7dddf6",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Build 01 Silver Tables",
+        "dependsOn": [
+          {
+            "activity": "Copy data files to bronze lakehouse",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "87917d98-3991-b6ec-4f33-6ef3818aef53",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Build 02 Gold Tables",
+        "dependsOn": [
+          {
+            "activity": "Build 01 Silver Tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "libraryVariables": {
+      "adls_server": {
+        "type": "String",
+        "variableName": "adls_server",
+        "libraryName": "environment_settings"
+      },
+      "adls_container_name": {
+        "type": "String",
+        "variableName": "adls_container_name",
+        "libraryName": "environment_settings"
+      },
+      "adls_container_path": {
+        "type": "String",
+        "variableName": "adls_container_path",
+        "libraryName": "environment_settings"
+      },
+      "adls_connection": {
+        "type": "Object",
+        "variableName": "adls_connection",
+        "libraryName": "environment_settings"
+      }
+    }
+  }
+}

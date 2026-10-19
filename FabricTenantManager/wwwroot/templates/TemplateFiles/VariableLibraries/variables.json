@@ -1,0 +1,53 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+    "variables": [
+      {
+        "name": "web_datasource_url",
+        "note": "",
+        "type": "String",
+        "value": "{web_datasource_url}"
+      },
+      {
+        "name": "adls_server",
+        "note": "",
+        "type": "String",
+        "value": "{adls_server}"
+      },
+      {
+        "name": "adls_container_name",
+        "note": "",
+        "type": "String",
+        "value": "{adls_container_name}"
+      },
+      {
+        "name": "adls_container_path",
+        "note": "",
+        "type": "String",
+        "value": "{adls_container_path}"
+      },
+      {
+        "name": "adls_connection_id",
+        "note": "",
+        "type": "String",
+        "value": "{adls_connection_id}"
+      },
+      {
+        "name": "lakehouse_id",
+        "note": "",
+        "type": "String",
+        "value": "{lakehouse_id}"
+      },
+      {
+        "name": "notebook_id_build_silver",
+        "note": "",
+        "type": "String",
+        "value": "{notebook_id_build_silver}"
+      },
+      {
+        "name": "notebook_id_build_gold",
+        "note": "",
+        "type": "String",
+        "value": "{notebook_id_build_gold}"
+      }
+    ]
+  }

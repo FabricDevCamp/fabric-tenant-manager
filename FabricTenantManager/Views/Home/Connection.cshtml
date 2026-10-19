@@ -1,0 +1,67 @@
+@model Microsoft.Fabric.Api.Core.Models.Connection
+
+<h2>
+  <span>Connection Detail</span>
+</h2>
+
+<div id="x">
+
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>Connection Id</td>
+      <td>@Model.Id</td>
+    </tr>
+    <tr>
+      <td>Name</td>
+      <td>@Model.DisplayName</td>
+    </tr>
+    <tr>
+      <td>Privacy Level</td>
+      <td>@Model.PrivacyLevel</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="background-color:lightyellow">
+        Connection Details
+      </td>
+    </tr>
+    <tr>
+      <td>Path</td>
+      <td>@Model.ConnectionDetails.Path</td>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td>@Model.ConnectionDetails.Type</td>
+    </tr>
+    @if (@Model.CredentialDetails != null) {
+      <tr>
+        <td colspan="2" style="background-color:lightyellow">
+          Credential Details
+        </td>
+      </tr>
+      <tr>
+        <td>Credential Type</td>
+        <td>@(Model.CredentialDetails.CredentialType ?? "null")</td>
+      </tr>
+      <tr>
+        <td>Connection Encryption</td>
+        <td>@Model.CredentialDetails.ConnectionEncryption</td>
+      </tr>
+      <tr>
+        <td>Single SignOn Type</td>
+        <td>@Model.CredentialDetails.SingleSignOnType</td>
+      </tr>
+      <tr>
+        <td>Skip Test Connection</td>
+        <td>@Model.CredentialDetails.SkipTestConnection.ToString()</td>
+      </tr>
+
+    }
+  </table>
+
+</div>

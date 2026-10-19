@@ -1,0 +1,12 @@
+find_replace:
+
+    # semantic model substitution of server for SQL Endpoint of lakehouse
+    - find_value: 'Sql\.Database\(\s*"([^"]*datawarehouse\.fabric\.microsoft\.com[^"]*)"\s*,'
+      replace_value:
+        _ALL_: $items.Lakehouse.sales.$sqlendpoint
+      is_regex: "true"
+      item_type: ["SemanticModel"]
+      file_path: "**/expressions.tmdl"
+
+
+

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "sales-data",
+    "path": "/Files",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "$(/**/environment_settings/adls_connection_id)",
+        "location": "$(/**/environment_settings/adls_server)",
+        "subpath": "$(/**/environment_settings/adls_path)"
+      }
+    }
+  }
+]

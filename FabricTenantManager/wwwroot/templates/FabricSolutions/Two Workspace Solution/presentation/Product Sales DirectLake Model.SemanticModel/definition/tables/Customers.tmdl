@@ -1,0 +1,95 @@
+table Customers
+	lineageTag: bcd27ce5-d0fb-40d2-be62-17660c31ea15
+	sourceLineageTag: [dbo].[customers]
+
+	column CustomerId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9cf6b829-b786-4f3a-8db6-9eb4479f5d93
+		sourceLineageTag: CustomerId
+		summarizeBy: none
+		sourceColumn: CustomerId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: e24367bd-fe72-4cee-9e27-282bdd8c21dc
+		sourceLineageTag: Country
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 448f6dbd-9210-4215-8890-ffdce771f78d
+		sourceLineageTag: City
+		dataCategory: Place
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'City Name'
+		dataType: string
+		lineageTag: a293a97f-a5ec-4396-929b-0701d89f2926
+		sourceLineageTag: CityName
+		summarizeBy: none
+		sourceColumn: CityName
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOB
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6fc3e7d5-e1f9-4e16-a916-397db4b299f1
+		sourceLineageTag: DOB
+		summarizeBy: none
+		sourceColumn: DOB
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: 984d71f0-b206-4341-8112-dd2d94fcd6fc
+		sourceLineageTag: Customer
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: 7098eddb-3270-40ad-b865-ebc3dfc7ce7d
+		sourceLineageTag: Age
+		summarizeBy: none
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Customer Geography'
+		lineageTag: 21178c3f-5374-4f8f-ba38-84326271bfaf
+
+		level Country
+			lineageTag: f0676a6b-2925-49f2-8505-7235314427a1
+			column: Country
+
+		level City
+			lineageTag: 0432d76e-b3d7-4c9f-8670-2c5f420a04e1
+			column: City
+
+	partition customers = entity
+		mode: directLake
+		source
+			entityName: customers
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation IsTableInBiModel = True
+

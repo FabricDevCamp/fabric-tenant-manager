@@ -1,0 +1,22 @@
+@model IList<Microsoft.Graph.Models.Application>
+
+
+<h2>Application</h2>
+
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Name</th>
+      <th>Id</th>
+      <th>App Id</th>
+    </tr>
+  </thead>
+  @foreach (var Application in @Model) {
+    <tr>
+      <td>@Application.DisplayName</td>
+      <td>@Application.Id</td>
+      <td>@Application.AppId</td>
+    </tr>
+  }
+</table>

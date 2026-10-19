@@ -1,0 +1,52 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "adls_server",
+      "note": "some note",
+      "type": "String",
+      "value": "https://fabricdevcampdemos.dfs.core.windows.net/"
+    },
+    {
+      "name": "adls_container_name",
+      "note": "some note",
+      "type": "String",
+      "value": "sampledata"
+    },
+    {
+      "name": "adls_container_path",
+      "note": "some note",
+      "type": "String",
+      "value": "/productsales/dev/"
+    },
+    {
+      "name": "adls_shortcut_subpath",
+      "note": "some note",
+      "type": "String",
+      "value": "sampledata/productsales/dev/"
+    },
+    {
+      "name": "adls_connection_id",
+      "note": "some note",
+      "type": "String",
+      "value": "ee8276ce-b8cc-4e35-8a0a-4751c9edd6cc"
+    },
+    {
+      "name": "adls_connection",
+      "note": "some note",
+      "type": "ConnectionReference",
+      "value": {
+        "connectionId": "ee8276ce-b8cc-4e35-8a0a-4751c9edd6cc"
+      }
+    },
+    {
+      "name": "gold_lakehouse",
+      "note": "",
+      "type": "ItemReference",
+      "value": {
+        "itemId": "60809542-faad-4c00-9cb2-35660557b0a0",
+        "workspaceId": "22829b82-df71-476a-bebc-43c0419da813"
+      }
+    }
+  ]
+}

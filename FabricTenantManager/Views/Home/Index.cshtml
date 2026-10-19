@@ -1,0 +1,38 @@
+﻿@model IList<FabricTenantManager.Models.FabricTenant>
+
+<H2>Tenants</H2>
+
+<div class="toolbar">
+  <a id="create-workspace-button" class="btn btn-primary" asp-action="OnboardTenant">
+    <i class="fa fa-user-plus"></i>
+    Onboard New Tenant
+  </a>
+</div>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Tenant</th>
+      <th style="text-align:center;">View</th>
+      <th style="text-align:center;">Web URL</th>
+      <th style="text-align:center;">Embed</th>
+      <th style="text-align:center;">Delete</th>
+      <th>Deployed Solution</th>
+      <th>Client ID</th>
+      <th>Workspace ID</th>
+    </tr>
+  </thead>
+  @foreach (var tenant in Model) {
+    <tr>
+      <td>@tenant.Name</td>
+      <td style="text-align:center"><a href="Home/Tenant/?TenantName=@tenant.Name" class="nav nav-link"><i class="fa fa-binoculars"></i></a></td>
+      <td style="text-align:center"><a href="@tenant.WorkspaceUrl" class="nav nav-link" target="_blank"><i class="fa fa-line-chart"></a></td>
+      <td style="text-align:center"><a href="Home/Embed/?TenantName=@tenant.Name" class="nav nav-link" target="_blank" rel="noopener noreferrer" ><i class="fa fa-code"></i></a></td>
+      <td style="text-align:center"><a href="Home/DeleteTenant/?TenantName=@tenant.Name" class="nav nav-link"><i class="fa fa-remove"></i></a></td>
+      <td>@tenant.SolutionName</td>
+      <td>@tenant.ClientId</td>      
+      <td>@tenant.WorkspaceId</td>
+
+    </tr>
+  }
+</table>

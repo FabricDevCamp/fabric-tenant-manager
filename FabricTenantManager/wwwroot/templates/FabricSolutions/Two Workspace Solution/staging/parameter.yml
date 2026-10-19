@@ -1,0 +1,17 @@
+find_replace:
+
+    - find_value: \#\s*META\s+"default_lakehouse_workspace_id":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      replace_value:
+        dev: "$workspace.$id"
+        test: "$workspace.$id"
+        prod: "$workspace.$id"
+      is_regex: "true"
+      item_type: ["Notebook"]
+
+    - find_value: \#\s*META\s+"default_lakehouse":\s*"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})"
+      replace_value:
+        dev: "$items.Lakehouse.sales_silver.$id"
+        test: "$items.Lakehouse.sales_silver.$id"   
+        prod: "$items.Lakehouse.sales_silver.$id" 
+      is_regex: "true"
+      item_type: ["Notebook"]

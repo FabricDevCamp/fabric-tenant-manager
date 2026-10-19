@@ -1,0 +1,38 @@
+@model FabricTenantManager.Models.OnboardTenantModel
+
+<h2>
+  <span><a class="btn btn-sm h2-backarrow" asp-action="Index"><i class="fa fa-backward"></i></a></span>
+  <span>Onboard New Customer Tenant</span>
+</h2>
+
+<form id="deploy-solution" method="post" action="OnboardTenant" class="form-horizontal">
+
+  <div class="mb-3">
+    <label for="Customer" class="form-label">Customer</label>
+    <select class="form-control form-select" id="Customer" name="Customer" asp-items="Model.AvailableCustomers" >
+    </select>
+  </div>
+  
+  <div class="mb-3">
+    <label for="SolutionName" class="form-label">Solution Name</label>
+    <select class="form-control form-select" id="SolutionName" name="SolutionName" asp-items="Model.AvailableSolutions" >
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <i class="fa fa-user-plus"></i>
+    Onboard Customer Tenant
+  </button>
+
+</form>
+
+
+@section Scripts {
+
+  <script type="text/javascript">
+    $(function () {
+      // add client-side behavior if required
+    });
+  </script>
+
+}

@@ -1,0 +1,24 @@
+@model IList<Microsoft.Fabric.Api.Core.Models.Connection>
+
+
+<h2>Connections</h2>
+
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>Name</th>
+      <th>Connection Type</th>
+      <th>View</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  @foreach (var Connection in @Model) {
+    <tr>
+      <td>@(Connection.DisplayName ?? "Personal Cloud Connection: " + Connection.ConnectionDetails.Path)</td>
+      <td>@Connection.ConnectionDetails.Type</td>
+      <td style="text-align:center"><a href="Connection/?ConnectionId=@Connection.Id" class="nav nav-link"><i class="fa fa-binoculars"></i></a></td>
+      <td style="text-align:center"><a href="DeleteConnection/?ConnectionId=@Connection.Id" class="nav nav-link"><i class="fa fa-remove"></i></a></td>
+    </tr>
+  }
+</table>

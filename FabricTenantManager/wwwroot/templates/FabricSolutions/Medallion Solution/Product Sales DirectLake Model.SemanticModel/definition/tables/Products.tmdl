@@ -1,0 +1,55 @@
+table Products
+	lineageTag: 6c709c45-7d02-4e37-ac8f-2bc517327431
+	sourceLineageTag: [dbo].[products]
+
+	column ProductId
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c51392e5-3a2d-4c26-9d12-2cf487ec6e6c
+		sourceLineageTag: ProductId
+		summarizeBy: none
+		sourceColumn: ProductId
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		lineageTag: 02c7d97e-318d-4034-9e6e-9d38f1d58d55
+		sourceLineageTag: Product
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 9cb0350e-8437-47ca-b917-8a92842ba561
+		sourceLineageTag: Category
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Product Category'
+		lineageTag: 897fad12-9caf-401c-9987-368917144e0e
+
+		level Category
+			lineageTag: e29e0d89-8690-4fa9-8121-7e73a43676dc
+			column: Category
+
+		level Product
+			lineageTag: 6b6edad1-f04f-48f2-8dd5-be6436293c93
+			column: Product
+
+	partition products = entity
+		mode: directLake
+		source
+			entityName: products
+			schemaName: dbo
+			expressionSource: DatabaseQuery
+
+	annotation IsTableInBiModel = True
+
